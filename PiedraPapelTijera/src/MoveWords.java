@@ -6,7 +6,7 @@ public class MoveWords{
     public static final int GANA = 1;
     public static final int PIERDE = 2;
 
-    private static final String[] validMoves = {"TIJERAS", "PAPEL", "PIEDRA"};
+    private static final String[] validMoves = {"TIJERAS", "PAPEL", "PIEDRA", "LAGARTIJA", "SPOCK"};
     private static final String[] validCommands = {"SALIR", "HELP"};
 
     private Random rnd;
@@ -50,24 +50,23 @@ public class MoveWords{
         showMoves();
         showCommands();    
     }
-
-    private static int getIndex(String value){
-	    for (int i =0; i< validMoves.length; i++){
-	        if(validMoves[i].equals(value))
-		        return i;
-	    }
-    	return -1;
-    }
+    
+    //Eliminamos el metodo getIndex() ya que no lo incluiremos en las nuevas reglas
 
     public static int checkWinner(String first, String second){
-	    int first_i, second_i;
-
-	    first_i = getIndex(first);
-	    second_i = getIndex(second);
-
-	    if (first_i == second_i) return EMPATE;
 	    
-	    return (( (first_i +1) % validMoves.length ) == second_i ) ? GANA: PIERDE;
+
+	    if (first.equals(second)) return EMPATE;
+	    
+	    //Reglas del juego incluidas las 2 nuevas variantes 
+	    else if (first.equals("PIEDRA") && (second.equals("TIJERAS") || second.equals("LAGARTIJA"))) return GANA;
+	    else if (first.equals("PAPEL") && (second.equals("PIEDRA") || second.equals("SPOCK"))) return GANA;
+	    else if (first.equals("TIJERAS") && (second.equals("PAPEL") || second.equals("LAGARTIJA"))) return GANA;
+	    else if (first.equals("LAGARTIJA") && (second.equals("PAPEL") || second.equals("SPOCK"))) return GANA;
+	    else if (first.equals("SPOCK") && (second.equals("TIJERAS") || second.equals("PIEDRA"))) return GANA;
+	    
+	    else return PIERDE;
+	    
 	}
 	
 } 
